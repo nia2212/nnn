@@ -1,0 +1,58 @@
+<!-- ... existing code ... -->
+                <!-- Navigation Tabs (Desktop) -->
+                <nav class="hidden md:flex items-center space-x-2">
+                    <button onclick="switchTab('kana')" id="nav-kana" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-colors bg-jpRed text-white">
+                        <i class="fa-solid me-1 fa-font"></i> Hiragana & Katakana
+                    </button>
+                    <button onclick="switchTab('vocab')" id="nav-vocab" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid me-1 fa-book"></i> Kosakata
+                    </button>
+                    <button onclick="switchTab('flashcards')" id="nav-flashcards" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid me-1 fa-clone"></i> Flashcard
+                    </button>
+                    <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid me-1 fa-gamepad"></i> Kuis Interaktif
+                    </button>
+                    <!-- Fullscreen Button (Desktop) -->
+                    <button onclick="toggleFullscreen()" title="Layar Penuh" class="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-semibold transition-colors border border-slate-200 ml-2">
+                        <i id="fullscreen-icon" class="fa-solid fa-expand"></i>
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu & Fullscreen Button -->
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="toggleFullscreen()" title="Layar Penuh" class="text-slate-600 p-2 rounded-lg hover:bg-slate-100 focus:outline-none border border-slate-200">
+                        <i id="fullscreen-icon-mobile" class="fa-solid fa-expand text-lg"></i>
+                    </button>
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-slate-600 p-2 rounded-lg hover:bg-slate-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-2 shadow-lg">
+            <button onclick="switchTab('kana'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-100">
+                <i class="fa-solid fa-font w-6"></i> Hiragana & Katakana
+            </button>
+            <button onclick="switchTab('vocab'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-100">
+                <i class="fa-solid fa-book w-6"></i> Kosakata
+            </button>
+            <button onclick="switchTab('flashcards'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-100">
+                <i class="fa-solid fa-clone w-6"></i> Flashcard
+            </button>
+            <button onclick="switchTab('quiz'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-slate-100">
+                <i class="fa-solid fa-gamepad w-6"></i> Kuis Interaktif
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex-grow w-full">
+
+        <!-- SECTION 1: HIRAGANA & KATAKANA GRID -->
+        <section id="section-kana" class="tab-content block">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Tab
