@@ -1,3 +1,4 @@
+
 <!-- ... existing code ... -->
                 <!-- Navigation Tabs (Desktop) -->
                 <nav class="hidden md:flex items-center space-x-2">
@@ -55,4 +56,209 @@
         <section id="section-kana" class="tab-content block">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <div>
-                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Tab
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Tabel Karakter Kana</h2>
+                    <p class="text-slate-600 text-xs sm:text-sm">Klik kartu karakter untuk mendengarkan pengucapan (Audio TTS).</p>
+                </div>
+
+                <!-- Sub Tab Switcher (Hiragana vs Katakana) -->
+                <div class="inline-flex p-1 bg-slate-200 rounded-xl w-full sm:w-auto">
+                    <button id="btn-hiragana" onclick="setKanaType('hiragana')" class="flex-1 sm:flex-initial px-4 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-bold bg-white shadow-sm text-jpRed transition-all text-center">
+                        Hiragana (ひらがな)
+                    </button>
+                    <button id="btn-katakana" onclick="setKanaType('katakana')" class="flex-1 sm:flex-initial px-4 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-all text-center">
+                        Katakana (カタカナ)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Kana Grid (Fully Responsive Grid) -->
+            <div id="kana-grid" class="grid grid-cols-4 min-[400px]:grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 sm:gap-3">
+                <!-- Data Kana Diinjeksi Lewat JavaScript -->
+            </div>
+        </section>
+
+        <!-- SECTION 2: KOSAKATA (VOCABULARY) -->
+        <section id="section-vocab" class="tab-content hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Daftar Kosakata Sehari-hari</h2>
+                    <p class="text-slate-600 text-xs sm:text-sm">Pelajari kata-kata penting yang sering digunakan dalam percakapan.</p>
+                </div>
+                <!-- Search and Filter -->
+                <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+                    <div class="relative w-full sm:w-64">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="vocab-search" oninput="filterVocab()" placeholder="Cari kata atau arti..." class="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-jpRed text-sm">
+                    </div>
+                    <select id="vocab-category" onchange="filterVocab()" class="py-2 px-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-jpRed text-sm bg-white">
+                        <option value="all">Semua Kategori</option>
+                        <option value="salam">Salam & Sapaan</option>
+                        <option value="angka">Angka (1-10)</option>
+                        <option value="keluarga">Keluarga</option>
+                        <option value="makanan">Makanan & Minuman</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Vocab Grid -->
+            <div id="vocab-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                <!-- Data Vocab Diinjeksi Lewat JavaScript -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: FLASHCARDS -->
+        <section id="section-flashcards" class="tab-content hidden">
+            <div class="max-w-xl mx-auto text-center px-2">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Flashcard Latihan</h2>
+                <p class="text-slate-600 text-xs sm:text-sm mb-6">Klik pada kartu untuk melihat arti / baliknya.</p>
+
+                <!-- Card Wrapper -->
+                <div class="perspective-1000 w-full h-64 sm:h-72 cursor-pointer mb-6" onclick="flipFlashcard()">
+                    <div id="flashcard-inner" class="relative w-full h-full transform-style-3d transition-transform duration-500 rounded-2xl shadow-xl bg-white border border-slate-200">
+                        <!-- Front -->
+                        <div class="absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6 rounded-2xl bg-gradient-to-br from-red-50 to-white border-2 border-red-100">
+                            <span id="fc-category" class="text-xs font-semibold px-3 py-1 bg-red-100 text-jpRed rounded-full mb-3 sm:mb-4">Kategori</span>
+                            <span id="fc-japanese" class="text-4xl sm:text-6xl font-bold text-slate-800 mb-2"></span>
+                            <span id="fc-romaji" class="text-base sm:text-lg text-slate-500 font-medium"></span>
+                            <span class="text-xs text-slate-400 mt-4 sm:mt-6"><i class="fa-solid fa-rotate me-1"></i> Klik untuk membalik</span>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-900 text-white">
+                            <span class="text-xs sm:text-sm font-medium text-slate-400 mb-2">Arti Bahasa Indonesia:</span>
+                            <span id="fc-meaning" class="text-2xl sm:text-3xl font-bold text-sakura mb-4 text-center"></span>
+                            <button onclick="event.stopPropagation(); playAudio(document.getElementById('fc-japanese').innerText)" class="px-4 py-2 bg-jpRed hover:bg-red-700 text-white rounded-lg text-xs sm:text-sm font-semibold transition-colors">
+                                <i class="fa-solid fa-volume-high me-1"></i> Dengarkan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="flex justify-between sm:justify-center items-center gap-2 sm:gap-4">
+                    <button onclick="prevFlashcard()" class="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 bg-white border border-slate-300 rounded-xl font-semibold text-slate-700 hover:bg-slate-50 shadow-sm text-xs sm:text-sm transition-all">
+                        <i class="fa-solid fa-arrow-left me-1 sm:me-2"></i> Sebelum
+                    </button>
+                    <span id="fc-counter" class="text-xs sm:text-sm font-bold text-slate-500 min-w-[60px] text-center">1 / 10</span>
+                    <button onclick="nextFlashcard()" class="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 bg-jpRed hover:bg-red-700 text-white rounded-xl font-semibold shadow-sm text-xs sm:text-sm transition-all">
+                        Lanjut <i class="fa-solid fa-arrow-right ms-1 sm:ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: KUIS INTERAKTIF -->
+        <section id="section-quiz" class="tab-content hidden">
+            <div class="max-w-2xl mx-auto">
+                <!-- Quiz Start Screen -->
+                <div id="quiz-start" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-md text-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-red-100 text-jpRed rounded-2xl flex items-center justify-center mx-auto text-2xl sm:text-3xl mb-4">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Uji Kemampuan Bahasa Jepangmu!</h2>
+                    <p class="text-slate-600 mb-6 text-xs sm:text-sm">Jawab 5 pertanyaan pilihan ganda untuk menguji pemahaman Hiragana, Katakana, dan Kosakata kamu.</p>
+                    <button onclick="startQuiz()" class="w-full sm:w-auto px-8 py-3 bg-jpRed hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-200 transition-all text-sm sm:text-base">
+                        Mulai Kuis Sekarang
+                    </button>
+                </div>
+
+                <!-- Quiz Play Screen -->
+                <div id="quiz-body" class="hidden bg-white rounded-2xl p-5 sm:p-8 border border-slate-200 shadow-md">
+                    <!-- Progress bar -->
+                    <div class="flex justify-between items-center mb-4">
+                        <span id="quiz-progress-text" class="text-xs font-bold text-jpRed uppercase tracking-wider">Pertanyaan 1 dari 5</span>
+                        <span id="quiz-timer" class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                            <i class="fa-regular fa-clock me-1"></i> Skor: <span id="quiz-score">0</span>
+                        </span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full mb-6 overflow-hidden">
+                        <div id="quiz-progress-bar" class="bg-jpRed h-full w-1/5 transition-all duration-300"></div>
+                    </div>
+
+                    <!-- Question -->
+                    <h3 id="quiz-question" class="text-lg sm:text-xl font-bold text-slate-800 mb-6">Pertanyaan...</h3>
+
+                    <!-- Options Grid -->
+                    <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                        <!-- Dynamic Buttons -->
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button id="quiz-next-btn" onclick="nextQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-xs sm:text-sm transition-all text-center">
+                            Pertanyaan Berikutnya <i class="fa-solid fa-chevron-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result Screen -->
+                <div id="quiz-result" class="hidden bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-md text-center">
+                    <div id="result-icon" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto text-3xl sm:text-4xl mb-4"></div>
+                    <h2 id="result-title" class="text-xl sm:text-2xl font-bold text-slate-900 mb-2"></h2>
+                    <p id="result-desc" class="text-slate-600 mb-6 text-xs sm:text-sm"></p>
+
+                    <div class="bg-slate-50 p-4 rounded-xl mb-6 inline-block w-full max-w-xs">
+                        <span class="text-xs text-slate-400 block mb-1">Skor Akhir Anda</span>
+                        <span id="result-score" class="text-3xl sm:text-4xl font-extrabold text-jpRed">0</span>
+                    </div>
+
+                    <div>
+                        <button onclick="startQuiz()" class="w-full sm:w-auto px-6 py-3 bg-jpRed hover:bg-red-700 text-white font-bold rounded-xl shadow-md transition-all text-sm">
+                            Coba Lagi <i class="fa-solid fa-rotate-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-4 sm:py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-500 text-xs sm:text-sm">
+            <p>© 2026 NihongoMaster - Dibuat untuk belajar Bahasa Jepang secara efisien.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ... existing code ...
+        // (Tetap pertahankan data hiraganaData, katakanaData, vocabData, quizQuestions)
+
+        // --- FULLSCREEN FEATURE ---
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Gagal aktifkan fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Listener untuk mengubah ikon fullscreen saat status fullscreen berubah
+        document.addEventListener('fullscreenchange', () => {
+            const iconDesktop = document.getElementById('fullscreen-icon');
+            const iconMobile = document.getElementById('fullscreen-icon-mobile');
+            if (document.fullscreenElement) {
+                if (iconDesktop) iconDesktop.className = 'fa-solid fa-compress';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-compress text-lg';
+            } else {
+                if (iconDesktop) iconDesktop.className = 'fa-solid fa-expand';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-expand text-lg';
+            }
+        });
+
+        // --- STATE MANAGEMENT ---
+        let currentKanaType = 'hiragana';
+        let currentFlashcardIndex = 0;
+        let isFlashcardFlipped = false;
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let selectedOptionIndex = null;
+
+        // ... existing code ...
+        // (Tetap pertahankan fungsi-fungsi pendukung lainnya)
+    </script>
+</body>
+</html>
